@@ -47,6 +47,10 @@ static NSString *currentUrlStr;
 
 + (NSString *)checkCachedWithUrl:(NSString *)urlStr {
     
+    if ([urlStr hasPrefix:@"/var"]) {
+        return urlStr;
+    }
+    
     NSURL *url = [NSURL URLWithString:urlStr];
     NSString *fileType = url.pathExtension;
     NSString *urlHash = [NSString stringWithFormat:@"%lu",(unsigned long)urlStr.hash];

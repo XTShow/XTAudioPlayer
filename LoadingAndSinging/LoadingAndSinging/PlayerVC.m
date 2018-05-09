@@ -15,7 +15,6 @@ UITableViewDelegate,
 UITableViewDataSource
 >
 
-@property (nonatomic,strong) XTAudioPlayer *player;
 @property (nonatomic,strong) NSArray *urlArray;
 @end
 
@@ -25,10 +24,19 @@ UITableViewDataSource
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor grayColor];
     
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *audioBoundlePath = [[NSBundle mainBundle] pathForResource:@"ForElise" ofType:@"mp3"];
+    NSString *audioSandboxPath = [documentPath stringByAppendingPathComponent:@"ForElise.mp3"];
+    NSString *videoBoundlePath = [[NSBundle mainBundle] pathForResource:@"video" ofType:@"mp4"];
+
     NSArray *audioUrlArray = @[
                                @"http://download.lingyongqian.cn/music/ForElise.mp3",
                                @"http://mpge.5nd.com/2018/2018-1-23/74521/1.mp3",
-                               @"http://download.lingyongqian.cn/music/AdagioSostenuto.mp3"
+                               @"http://download.lingyongqian.cn/music/AdagioSostenuto.mp3",
+                               @"http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4",
+                               audioBoundlePath,
+                               audioSandboxPath,
+                               videoBoundlePath,
                                ];
     self.urlArray = audioUrlArray;
     
@@ -40,10 +48,6 @@ UITableViewDataSource
     tableView.delegate = self;
     tableView.dataSource = self;
     [self.view addSubview:tableView];
-    
-    
-    XTAudioPlayer *player = [XTAudioPlayer sharePlayer];
-    self.player = player;
     
     CGFloat btnY = SHeight - 66;
     
@@ -73,7 +77,7 @@ UITableViewDataSource
 }
 
 -(void)dealloc{
-    NSLog(@"vc释放成功");
+    NSLog(@"%@:%s",[self class],__func__);
 }
 
 #pragma mark - UITableViewDelegate & UITableViewDataSource
@@ -92,21 +96,32 @@ UITableViewDataSource
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self.player playWithUrlStr:self.urlArray[indexPath.row] cachePath:nil];
+
+    //Configure properties for XTAudioPlayer and playback a video.
+//    [XTAudioPlayer sharePlayer].config.playerLayerRotateAngle = M_PI_2;
+//    [XTAudioPlayer sharePlayer].config.playerLayerVideoGravity = AVLayerVideoGravityResizeAspectFill;
+//    [XTAudioPlayer sharePlayer].config.audioSessionCategory = AVAudioSessionCategoryPlayback;
+//
+//    [[XTAudioPlayer sharePlayer] playWithUrlStr:self.urlArray[indexPath.row] cachePath:nil videoFrame:[UIScreen mainScreen].bounds inView:self.view completion:nil];
+    
+    //======
+    
+    //Playback a audio.
+    [[XTAudioPlayer sharePlayer] playWithUrlStr:self.urlArray[indexPath.row] cachePath:nil completion:nil];
 }
 
-#pragma mark - 辅助方法
+#pragma mark - Assistant Selector
 - (void)playerPause {
-    [self.player pause];
+    [[XTAudioPlayer sharePlayer] pause];
 }
 
 - (void)playerRestart {
-    [self.player restart];
+    [[XTAudioPlayer sharePlayer] restart];
 }
 
 - (void)dismiss {
-    [self.player cancel];
-//    [XTAudioPlayer completeDealloc];//完全销毁，释放掉XTAudioPlayer所占用的全部内存，如非特殊需要，不建议使用。
+    [[XTAudioPlayer sharePlayer] cancel];
+    //[XTAudioPlayer completeDealloc];// Completely destroy the Player, free up all the memory occupied by the XTAudioPlayer. If not special needs, it is not recommended.(完全销毁，释放掉XTAudioPlayer所占用的全部内存，如非特殊需要，不建议使用。)
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 @end

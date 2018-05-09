@@ -19,6 +19,9 @@
 		72DC103C202D459900B09F57 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72DC103A202D459900B09F57 /* LaunchScreen.storyboard */; };
 		72DC103F202D459900B09F57 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 72DC103E202D459900B09F57 /* main.m */; };
 		72DC1048202D480E00B09F57 /* XTAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 72DC1047202D480E00B09F57 /* XTAudioPlayer.m */; };
+		72FD65A120A179BA003E18B1 /* ForElise.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 72FD65A020A179B9003E18B1 /* ForElise.mp3 */; };
+		72FD65BB20A19E94003E18B1 /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 72FD65BA20A19E93003E18B1 /* video.mp4 */; };
+		72FD65BE20A19FAE003E18B1 /* XTPlayerConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FD65BD20A19FAE003E18B1 /* XTPlayerConfiguration.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +47,10 @@
 		72DC103E202D459900B09F57 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		72DC1046202D480E00B09F57 /* XTAudioPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XTAudioPlayer.h; sourceTree = "<group>"; };
 		72DC1047202D480E00B09F57 /* XTAudioPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XTAudioPlayer.m; sourceTree = "<group>"; };
+		72FD65A020A179B9003E18B1 /* ForElise.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ForElise.mp3; sourceTree = "<group>"; };
+		72FD65BA20A19E93003E18B1 /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.mp4; sourceTree = "<group>"; };
+		72FD65BC20A19FAE003E18B1 /* XTPlayerConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XTPlayerConfiguration.h; sourceTree = "<group>"; };
+		72FD65BD20A19FAE003E18B1 /* XTPlayerConfiguration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XTPlayerConfiguration.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +64,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4388625120A1EDA4006D3B30 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				72DC1035202D459900B09F57 /* Main.storyboard */,
+				72FD65A020A179B9003E18B1 /* ForElise.mp3 */,
+				72FD65BA20A19E93003E18B1 /* video.mp4 */,
+				72DC1038202D459900B09F57 /* Assets.xcassets */,
+				72DC103A202D459900B09F57 /* LaunchScreen.storyboard */,
+				72DC103D202D459900B09F57 /* Info.plist */,
+				72DC103E202D459900B09F57 /* main.m */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		72DC1023202D459900B09F57 = {
 			isa = PBXGroup;
 			children = (
@@ -83,11 +104,7 @@
 				72DC1033202D459900B09F57 /* ViewController.m */,
 				43ACD9112037F53800392974 /* PlayerVC.h */,
 				43ACD9122037F53800392974 /* PlayerVC.m */,
-				72DC1035202D459900B09F57 /* Main.storyboard */,
-				72DC1038202D459900B09F57 /* Assets.xcassets */,
-				72DC103A202D459900B09F57 /* LaunchScreen.storyboard */,
-				72DC103D202D459900B09F57 /* Info.plist */,
-				72DC103E202D459900B09F57 /* main.m */,
+				4388625120A1EDA4006D3B30 /* Supporting Files */,
 			);
 			path = LoadingAndSinging;
 			sourceTree = "<group>";
@@ -97,6 +114,8 @@
 			children = (
 				72DC1046202D480E00B09F57 /* XTAudioPlayer.h */,
 				72DC1047202D480E00B09F57 /* XTAudioPlayer.m */,
+				72FD65BC20A19FAE003E18B1 /* XTPlayerConfiguration.h */,
+				72FD65BD20A19FAE003E18B1 /* XTPlayerConfiguration.m */,
 				437C5E732033154C008679A1 /* XTRangeManager.h */,
 				437C5E742033154C008679A1 /* XTRangeManager.m */,
 				437C5E762033166F008679A1 /* XTRangeModel.h */,
@@ -168,8 +187,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				72DC103C202D459900B09F57 /* LaunchScreen.storyboard in Resources */,
+				72FD65BB20A19E94003E18B1 /* video.mp4 in Resources */,
 				72DC1039202D459900B09F57 /* Assets.xcassets in Resources */,
 				72DC1037202D459900B09F57 /* Main.storyboard in Resources */,
+				72FD65A120A179BA003E18B1 /* ForElise.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,6 +201,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72FD65BE20A19FAE003E18B1 /* XTPlayerConfiguration.m in Sources */,
 				72DC1034202D459900B09F57 /* ViewController.m in Sources */,
 				437C5E7B20331904008679A1 /* XTDownloader.m in Sources */,
 				437C5E782033166F008679A1 /* XTRangeModel.m in Sources */,
@@ -324,7 +346,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 52A7F2ZN49;
-				INFOPLIST_FILE = LoadingAndSinging/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/LoadingAndSinging/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = XTShow.LoadingAndSinging;
@@ -339,7 +361,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 52A7F2ZN49;
-				INFOPLIST_FILE = LoadingAndSinging/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/LoadingAndSinging/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = XTShow.LoadingAndSinging;

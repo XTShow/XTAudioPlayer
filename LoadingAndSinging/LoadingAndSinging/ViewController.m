@@ -26,6 +26,18 @@
     btn.layer.cornerRadius = 5;
     [self.view addSubview:btn];
     [btn addTarget:self action:@selector(pushToPlayerVC) forControlEvents:UIControlEventTouchUpInside];
+    
+    //Prepare the file in sandbox
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *itemPath = [documentPath stringByAppendingPathComponent:@"ForElise.mp3"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:itemPath]) {
+        NSString *mp3Path = [[NSBundle mainBundle] pathForResource:@"ForElise" ofType:@"mp3"];
+        NSError *error;
+        [[NSFileManager defaultManager] copyItemAtPath:mp3Path toPath:[documentPath stringByAppendingPathComponent:@"ForElise.mp3"] error:&error];
+        if (error) {
+            NSLog(@"%@",error);
+        }
+    }
 }
 
 - (void)pushToPlayerVC {

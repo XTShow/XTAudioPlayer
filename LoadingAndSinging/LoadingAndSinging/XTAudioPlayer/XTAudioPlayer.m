@@ -23,13 +23,23 @@ AVAssetResourceLoaderDelegate
 
 @property (nonatomic,copy) NSString *originalUrlStr;
 @property (nonatomic,strong) AVPlayer *player;
+@property (nonatomic,strong) AVPlayerLayer *playerLayer;
 @property (nonatomic,strong) XTDataManager *dataManager;
 @property (nonatomic,strong) XTDownloader *lastToEndDownloader;
 @property (nonatomic,strong) NSMutableArray *nonToEndDownloaderArray;
+@property (nonatomic,copy) PlayCompleteBlock playCompleteBlock;
 @end
 
 @implementation XTAudioPlayer
 
+-(XTPlayerConfiguration *)config{
+    if (!_config) {
+        _config = [XTPlayerConfiguration new];
+    }
+    return _config;
+}
+
+#pragma mark - 生命周期
 + (instancetype)sharePlayer {
     
     dispatch_once(&onceToken, ^{
@@ -38,20 +48,30 @@ AVAssetResourceLoaderDelegate
     return audioPlayer;
 }
 
-- (void)playWithUrlStr:(nonnull NSString *)urlStr cachePath:(nullable NSString *)cachePath{
+-(void)dealloc{
+    NSLog(@"[XTAudioPlayer]%@:%s",self,__func__);
+}
+
+- (void)playWithUrlStr:(nonnull NSString *)urlStr cachePath:(nullable NSString *)cachePath completion:(PlayCompleteBlock)playCompleteBlock{
     
     [self cancel];
     
     self.originalUrlStr = urlStr;
-
+    
     NSError *error;
-    [[AVAudioSession sharedInstance] setCategory:self.audioSessionCategory?self.audioSessionCategory:AVAudioSessionCategoryPlayback error:&error];
+    [[AVAudioSession sharedInstance] setCategory:self.config.audioSessionCategory?self.config.audioSessionCategory:AVAudioSessionCategoryPlayback error:&error];
     if (error) {
         NSLog(@"[XTAudioPlayer]%s:%@",__func__,error);
     }
     
     if ([XTDataManager checkCachedWithUrl:urlStr]) {
-        AVPlayer *player = [AVPlayer playerWithURL:[NSURL fileURLWithPath:[XTDataManager checkCachedWithUrl:urlStr]]];
+        
+        AVURLAsset *asset = [AVURLAsset URLAssetWithURL:[NSURL fileURLWithPath:[XTDataManager checkCachedWithUrl:urlStr]] options:nil];
+        
+        AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:asset];
+        
+        AVPlayer *player = [AVPlayer playerWithPlayerItem:playerItem];
+
         self.player = player;
         [player play];
     }else{
@@ -80,7 +100,30 @@ AVAssetResourceLoaderDelegate
         }
         
     }
+    
+    if (self.player) {
+        self.playCompleteBlock = playCompleteBlock;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playToEnd) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(failToEnd:) name:AVPlayerItemFailedToPlayToEndTimeNotification object:nil];
+    }
 
+}
+
+- (void)playWithUrlStr:(nonnull NSString *)urlStr cachePath:(nullable NSString *)cachePath videoFrame:(CGRect)videoFrame inView:(UIView *)bgView completion:(PlayCompleteBlock)playCompleteBlock{
+    
+    [self playWithUrlStr:urlStr cachePath:cachePath completion:playCompleteBlock];
+    
+    if ((!CGRectEqualToRect(videoFrame, CGRectZero)) & (bgView != nil)) {
+        
+        if (self.player) {
+            AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
+            self.playerLayer = playerLayer;
+            playerLayer.transform = CATransform3DRotate(CATransform3DIdentity, self.config.playerLayerRotateAngle?self.config.playerLayerRotateAngle:0, 0, 0, 1);
+            playerLayer.videoGravity = self.config.playerLayerVideoGravity?self.config.playerLayerVideoGravity:AVLayerVideoGravityResizeAspect;
+            playerLayer.frame = videoFrame;//注意此处三者间的顺序
+            [bgView.layer addSublayer:playerLayer];
+        }
+    }
 }
 
 - (void)restart {
@@ -93,6 +136,8 @@ AVAssetResourceLoaderDelegate
 
 - (void)cancel {
     self.player = nil;
+    [self.playerLayer removeFromSuperlayer];
+    self.playerLayer = nil;
     self.dataManager = nil;
     [self.lastToEndDownloader cancel];
     self.lastToEndDownloader = nil;
@@ -111,6 +156,22 @@ AVAssetResourceLoaderDelegate
 -(BOOL)resourceLoader:(AVAssetResourceLoader *)resourceLoader shouldWaitForLoadingOfRequestedResource:(AVAssetResourceLoadingRequest *)loadingRequest{
     [self handleLoadingRequest:loadingRequest];
     return YES;
+}
+
+#pragma mark - 播放状态
+-(void)playToEnd{
+    [self cancel];
+    if (self.playCompleteBlock) {
+        self.playCompleteBlock(nil);
+    }
+}
+
+-(void)failToEnd:(NSNotification *)noti{
+    [self cancel];
+    NSError *error = noti.userInfo[AVPlayerItemFailedToPlayToEndTimeErrorKey];
+    if (self.playCompleteBlock) {
+        self.playCompleteBlock(error);
+    }
 }
 
 #pragma mark - 逻辑方法
