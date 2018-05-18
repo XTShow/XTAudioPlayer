@@ -18,7 +18,8 @@ static NSString *XTCustomScheme = @"XTShow";
 
 @interface XTAudioPlayer ()
 <
-AVAssetResourceLoaderDelegate
+AVAssetResourceLoaderDelegate,
+XTDataManagerDelegate
 >
 
 @property (nonatomic,copy) NSString *originalUrlStr;
@@ -28,6 +29,12 @@ AVAssetResourceLoaderDelegate
 @property (nonatomic,strong) XTDownloader *lastToEndDownloader;
 @property (nonatomic,strong) NSMutableArray *nonToEndDownloaderArray;
 @property (nonatomic,copy) PlayCompleteBlock playCompleteBlock;
+@property (nonatomic,assign) BOOL addedNoti;
+@property (nonatomic,assign) BOOL buffering;//buffer正在充能
+@property (nonatomic,assign) BOOL fileCacheComplete;//当前文件下载成功并copy到指定缓存目录
+@property (nonatomic,assign) BOOL fileExist;//当前文件本地有缓存(直接播放模式)
+@property (nonatomic,assign) BOOL playedToEnd;//已经接收到了playToEnd的通知
+
 @end
 
 @implementation XTAudioPlayer
@@ -55,7 +62,7 @@ AVAssetResourceLoaderDelegate
 - (void)playWithUrlStr:(nonnull NSString *)urlStr cachePath:(nullable NSString *)cachePath completion:(PlayCompleteBlock)playCompleteBlock{
     
     [self cancel];
-    
+    self.fileCacheComplete = NO;
     self.originalUrlStr = urlStr;
     
     NSError *error;
@@ -64,9 +71,20 @@ AVAssetResourceLoaderDelegate
         NSLog(@"[XTAudioPlayer]%s:%@",__func__,error);
     }
     
-    if ([XTDataManager checkCachedWithUrl:urlStr]) {
+    NSString *filePath;
+    BOOL fileExist;
+    if (cachePath) {
+        filePath = cachePath;
+        fileExist = ([XTDataManager checkCachedWithFilePath:cachePath] != nil);
+    }else{
+        filePath = [XTDataManager checkCachedWithUrl:urlStr];
+        fileExist = ([XTDataManager checkCachedWithUrl:urlStr] != nil);
+    }
+    self.fileExist = fileExist;
+    
+    if (fileExist) {
         
-        AVURLAsset *asset = [AVURLAsset URLAssetWithURL:[NSURL fileURLWithPath:[XTDataManager checkCachedWithUrl:urlStr]] options:nil];
+        AVURLAsset *asset = [AVURLAsset URLAssetWithURL:[NSURL fileURLWithPath:filePath] options:nil];
         
         AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:asset];
         
@@ -74,9 +92,11 @@ AVAssetResourceLoaderDelegate
 
         self.player = player;
         [player play];
+        
     }else{
         
-        XTDataManager *dataManager = [[XTDataManager alloc] initWithUrlStr:urlStr cachePath:cachePath];
+        XTDataManager *dataManager = [[XTDataManager alloc] initWithUrlStr:urlStr cachePath:filePath];
+        dataManager.delegate = self;
         
         if (dataManager) {
             
@@ -87,6 +107,8 @@ AVAssetResourceLoaderDelegate
             //为asset.resourceLoader设置代理对象
             [asset.resourceLoader setDelegate:self queue:dispatch_get_main_queue()];
             AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:asset];
+            [playerItem addObserver:self forKeyPath:@"playbackBufferEmpty" options:NSKeyValueObservingOptionNew context:nil];
+            [playerItem addObserver:self forKeyPath:@"playbackLikelyToKeepUp" options:NSKeyValueObservingOptionNew context:nil];
             
             AVPlayer *player = [AVPlayer playerWithPlayerItem:playerItem];
             self.player = player;
@@ -103,8 +125,12 @@ AVAssetResourceLoaderDelegate
     
     if (self.player) {
         self.playCompleteBlock = playCompleteBlock;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playToEnd) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(failToEnd:) name:AVPlayerItemFailedToPlayToEndTimeNotification object:nil];
+        if (!self.addedNoti) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playToEnd) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(failToEnd:) name:AVPlayerItemFailedToPlayToEndTimeNotification object:nil];
+            self.addedNoti = YES;
+        }
+        
     }
 
 }
@@ -126,6 +152,18 @@ AVAssetResourceLoaderDelegate
     }
 }
 
+- (AVPlayerViewController *)playByPlayerVCWithUrlStr:(nonnull NSString *)urlStr cachePath:(nullable NSString *)cachePath completion:(PlayCompleteBlock)playCompleteBlock{
+    
+    [self playWithUrlStr:urlStr cachePath:cachePath completion:playCompleteBlock];
+    
+    if (self.player) {
+        AVPlayerViewController *playerVC = [AVPlayerViewController new];
+        playerVC.player = self.player;
+        return playerVC;
+    }
+    return nil;
+}
+
 - (void)restart {
     [self.player play];
 }
@@ -135,6 +173,11 @@ AVAssetResourceLoaderDelegate
 }
 
 - (void)cancel {
+    if (!self.fileExist) {
+        [self.player.currentItem removeObserver:self forKeyPath:@"playbackBufferEmpty"];
+        [self.player.currentItem removeObserver:self forKeyPath:@"playbackLikelyToKeepUp"];
+    }
+    
     self.player = nil;
     [self.playerLayer removeFromSuperlayer];
     self.playerLayer = nil;
@@ -146,7 +189,8 @@ AVAssetResourceLoaderDelegate
     }
 }
 
-+ (void)completeDealloc{
+- (void)completeDealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [XTRangeManager completeDealloc];
     onceToken = 0;
     audioPlayer = nil;
@@ -158,12 +202,31 @@ AVAssetResourceLoaderDelegate
     return YES;
 }
 
+#pragma mark - XTDataManagerDelegate
+-(void)fileDownloadAndSaveSuccess{
+    if (!self.fileExist) {
+        self.fileCacheComplete = YES;
+        if (self.playedToEnd) {
+            [self playToEnd];
+        }
+    }
+}
+
 #pragma mark - 播放状态
 -(void)playToEnd{
+    
+    self.playedToEnd = YES;
+    if (!self.fileExist && !self.fileCacheComplete) {
+        return;
+    }
+
     [self cancel];
     if (self.playCompleteBlock) {
         self.playCompleteBlock(nil);
     }
+    
+    self.playedToEnd = NO;
+    
 }
 
 -(void)failToEnd:(NSNotification *)noti{
@@ -174,12 +237,42 @@ AVAssetResourceLoaderDelegate
     }
 }
 
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
+
+    if ([keyPath isEqualToString:@"playbackBufferEmpty"]) {
+        AVPlayerItem *playerItem = (AVPlayerItem *)object;
+        if (playerItem.playbackBufferEmpty) {
+            if ([self.delegate respondsToSelector:@selector(suspendForLoadingDataWithPlayer:)]) {
+                self.buffering = YES;
+                [self.delegate suspendForLoadingDataWithPlayer:self.player];
+            }
+        }
+    }else if ([keyPath isEqualToString:@"playbackLikelyToKeepUp"]){
+        if ([self.delegate respondsToSelector:@selector(activeToContinueWithPlayer:)] && self.buffering) {
+            self.buffering = NO;
+            [self.delegate activeToContinueWithPlayer:self.player];
+        }
+    }
+}
+
 #pragma mark - 逻辑方法
 - (void)handleLoadingRequest:(AVAssetResourceLoadingRequest *)loadingRequest{
-    
+
     //取消上一个requestsAllDataToEndOfResource的请求
     if (loadingRequest.dataRequest.requestsAllDataToEndOfResource) {
         if (self.lastToEndDownloader) {
+            
+            long long lastRequestedOffset = self.lastToEndDownloader.loadingRequest.dataRequest.requestedOffset;
+            long long lastRequestedLength = self.lastToEndDownloader.loadingRequest.dataRequest.requestedLength;
+            long long lastCurrentOffset = self.lastToEndDownloader.loadingRequest.dataRequest.currentOffset;
+
+            long long currentRequestedOffset = loadingRequest.dataRequest.requestedOffset;
+            long long currentRequestedLength = loadingRequest.dataRequest.requestedLength;
+            long long currentCurrentOffset = loadingRequest.dataRequest.currentOffset;
+            
+            if (lastRequestedOffset == currentRequestedOffset && lastRequestedLength == currentRequestedLength && lastCurrentOffset == currentCurrentOffset) {
+                return;//在弱网络情况下，下载文件最后部分时，会出现所请求数据完全一致的loadingRequest（且requestsAllDataToEndOfResource = YES），此时不应取消前一个与其相同的请求；否则会无限生成相同的请求范围的loadingRequest，无限取消，产生循环
+            }
             [self.lastToEndDownloader cancel];
         }
     }

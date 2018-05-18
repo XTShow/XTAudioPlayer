@@ -7,34 +7,38 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		437C5E752033154C008679A1 /* XTRangeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 437C5E742033154C008679A1 /* XTRangeManager.m */; };
-		437C5E782033166F008679A1 /* XTRangeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 437C5E772033166F008679A1 /* XTRangeModel.m */; };
-		437C5E7B20331904008679A1 /* XTDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 437C5E7A20331904008679A1 /* XTDownloader.m */; };
-		437C5E7E2033191B008679A1 /* XTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 437C5E7D2033191B008679A1 /* XTDataManager.m */; };
 		43ACD9132037F53800392974 /* PlayerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ACD9122037F53800392974 /* PlayerVC.m */; };
+		72678BF720AE7028001F17AA /* XTRangeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 72678BEB20AE7028001F17AA /* XTRangeManager.m */; };
+		72678BF820AE7028001F17AA /* XTPlayerConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 72678BEE20AE7028001F17AA /* XTPlayerConfiguration.m */; };
+		72678BF920AE7028001F17AA /* XTAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 72678BF220AE7028001F17AA /* XTAudioPlayer.m */; };
+		72678BFA20AE7028001F17AA /* XTDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 72678BF420AE7028001F17AA /* XTDownloader.m */; };
+		72678BFB20AE7028001F17AA /* XTRangeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 72678BF520AE7028001F17AA /* XTRangeModel.m */; };
+		72678BFC20AE7028001F17AA /* XTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 72678BF620AE7028001F17AA /* XTDataManager.m */; };
 		72DC1031202D459900B09F57 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 72DC1030202D459900B09F57 /* AppDelegate.m */; };
 		72DC1034202D459900B09F57 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72DC1033202D459900B09F57 /* ViewController.m */; };
 		72DC1037202D459900B09F57 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72DC1035202D459900B09F57 /* Main.storyboard */; };
 		72DC1039202D459900B09F57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72DC1038202D459900B09F57 /* Assets.xcassets */; };
 		72DC103C202D459900B09F57 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72DC103A202D459900B09F57 /* LaunchScreen.storyboard */; };
 		72DC103F202D459900B09F57 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 72DC103E202D459900B09F57 /* main.m */; };
-		72DC1048202D480E00B09F57 /* XTAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 72DC1047202D480E00B09F57 /* XTAudioPlayer.m */; };
 		72FD65A120A179BA003E18B1 /* ForElise.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 72FD65A020A179B9003E18B1 /* ForElise.mp3 */; };
 		72FD65BB20A19E94003E18B1 /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 72FD65BA20A19E93003E18B1 /* video.mp4 */; };
-		72FD65BE20A19FAE003E18B1 /* XTPlayerConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FD65BD20A19FAE003E18B1 /* XTPlayerConfiguration.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		437C5E732033154C008679A1 /* XTRangeManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XTRangeManager.h; sourceTree = "<group>"; };
-		437C5E742033154C008679A1 /* XTRangeManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XTRangeManager.m; sourceTree = "<group>"; };
-		437C5E762033166F008679A1 /* XTRangeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XTRangeModel.h; sourceTree = "<group>"; };
-		437C5E772033166F008679A1 /* XTRangeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XTRangeModel.m; sourceTree = "<group>"; };
-		437C5E7920331904008679A1 /* XTDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XTDownloader.h; sourceTree = "<group>"; };
-		437C5E7A20331904008679A1 /* XTDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XTDownloader.m; sourceTree = "<group>"; };
-		437C5E7C2033191B008679A1 /* XTDataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XTDataManager.h; sourceTree = "<group>"; };
-		437C5E7D2033191B008679A1 /* XTDataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XTDataManager.m; sourceTree = "<group>"; };
 		43ACD9112037F53800392974 /* PlayerVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerVC.h; sourceTree = "<group>"; };
 		43ACD9122037F53800392974 /* PlayerVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerVC.m; sourceTree = "<group>"; };
+		72678BEB20AE7028001F17AA /* XTRangeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTRangeManager.m; sourceTree = "<group>"; };
+		72678BEC20AE7028001F17AA /* XTAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTAudioPlayer.h; sourceTree = "<group>"; };
+		72678BED20AE7028001F17AA /* XTDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTDownloader.h; sourceTree = "<group>"; };
+		72678BEE20AE7028001F17AA /* XTPlayerConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTPlayerConfiguration.m; sourceTree = "<group>"; };
+		72678BEF20AE7028001F17AA /* XTDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTDataManager.h; sourceTree = "<group>"; };
+		72678BF020AE7028001F17AA /* XTRangeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTRangeModel.h; sourceTree = "<group>"; };
+		72678BF120AE7028001F17AA /* XTRangeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTRangeManager.h; sourceTree = "<group>"; };
+		72678BF220AE7028001F17AA /* XTAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTAudioPlayer.m; sourceTree = "<group>"; };
+		72678BF320AE7028001F17AA /* XTPlayerConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTPlayerConfiguration.h; sourceTree = "<group>"; };
+		72678BF420AE7028001F17AA /* XTDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDownloader.m; sourceTree = "<group>"; };
+		72678BF520AE7028001F17AA /* XTRangeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTRangeModel.m; sourceTree = "<group>"; };
+		72678BF620AE7028001F17AA /* XTDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDataManager.m; sourceTree = "<group>"; };
 		72DC102C202D459900B09F57 /* LoadingAndSinging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoadingAndSinging.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72DC102F202D459900B09F57 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		72DC1030202D459900B09F57 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -45,12 +49,8 @@
 		72DC103B202D459900B09F57 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		72DC103D202D459900B09F57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		72DC103E202D459900B09F57 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		72DC1046202D480E00B09F57 /* XTAudioPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XTAudioPlayer.h; sourceTree = "<group>"; };
-		72DC1047202D480E00B09F57 /* XTAudioPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XTAudioPlayer.m; sourceTree = "<group>"; };
 		72FD65A020A179B9003E18B1 /* ForElise.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ForElise.mp3; sourceTree = "<group>"; };
 		72FD65BA20A19E93003E18B1 /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.mp4; sourceTree = "<group>"; };
-		72FD65BC20A19FAE003E18B1 /* XTPlayerConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XTPlayerConfiguration.h; sourceTree = "<group>"; };
-		72FD65BD20A19FAE003E18B1 /* XTPlayerConfiguration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XTPlayerConfiguration.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +78,25 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		72678BEA20AE7028001F17AA /* XTAudioPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				72678BEC20AE7028001F17AA /* XTAudioPlayer.h */,
+				72678BF220AE7028001F17AA /* XTAudioPlayer.m */,
+				72678BF320AE7028001F17AA /* XTPlayerConfiguration.h */,
+				72678BEE20AE7028001F17AA /* XTPlayerConfiguration.m */,
+				72678BF120AE7028001F17AA /* XTRangeManager.h */,
+				72678BEB20AE7028001F17AA /* XTRangeManager.m */,
+				72678BF020AE7028001F17AA /* XTRangeModel.h */,
+				72678BF520AE7028001F17AA /* XTRangeModel.m */,
+				72678BED20AE7028001F17AA /* XTDownloader.h */,
+				72678BF420AE7028001F17AA /* XTDownloader.m */,
+				72678BEF20AE7028001F17AA /* XTDataManager.h */,
+				72678BF620AE7028001F17AA /* XTDataManager.m */,
+			);
+			path = XTAudioPlayer;
+			sourceTree = "<group>";
+		};
 		72DC1023202D459900B09F57 = {
 			isa = PBXGroup;
 			children = (
@@ -97,7 +116,7 @@
 		72DC102E202D459900B09F57 /* LoadingAndSinging */ = {
 			isa = PBXGroup;
 			children = (
-				72DC1045202D465900B09F57 /* XTAudioPlayer */,
+				72678BEA20AE7028001F17AA /* XTAudioPlayer */,
 				72DC102F202D459900B09F57 /* AppDelegate.h */,
 				72DC1030202D459900B09F57 /* AppDelegate.m */,
 				72DC1032202D459900B09F57 /* ViewController.h */,
@@ -107,25 +126,6 @@
 				4388625120A1EDA4006D3B30 /* Supporting Files */,
 			);
 			path = LoadingAndSinging;
-			sourceTree = "<group>";
-		};
-		72DC1045202D465900B09F57 /* XTAudioPlayer */ = {
-			isa = PBXGroup;
-			children = (
-				72DC1046202D480E00B09F57 /* XTAudioPlayer.h */,
-				72DC1047202D480E00B09F57 /* XTAudioPlayer.m */,
-				72FD65BC20A19FAE003E18B1 /* XTPlayerConfiguration.h */,
-				72FD65BD20A19FAE003E18B1 /* XTPlayerConfiguration.m */,
-				437C5E732033154C008679A1 /* XTRangeManager.h */,
-				437C5E742033154C008679A1 /* XTRangeManager.m */,
-				437C5E762033166F008679A1 /* XTRangeModel.h */,
-				437C5E772033166F008679A1 /* XTRangeModel.m */,
-				437C5E7920331904008679A1 /* XTDownloader.h */,
-				437C5E7A20331904008679A1 /* XTDownloader.m */,
-				437C5E7C2033191B008679A1 /* XTDataManager.h */,
-				437C5E7D2033191B008679A1 /* XTDataManager.m */,
-			);
-			path = XTAudioPlayer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,16 +201,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				72FD65BE20A19FAE003E18B1 /* XTPlayerConfiguration.m in Sources */,
 				72DC1034202D459900B09F57 /* ViewController.m in Sources */,
-				437C5E7B20331904008679A1 /* XTDownloader.m in Sources */,
-				437C5E782033166F008679A1 /* XTRangeModel.m in Sources */,
-				437C5E7E2033191B008679A1 /* XTDataManager.m in Sources */,
-				72DC1048202D480E00B09F57 /* XTAudioPlayer.m in Sources */,
-				437C5E752033154C008679A1 /* XTRangeManager.m in Sources */,
 				72DC103F202D459900B09F57 /* main.m in Sources */,
+				72678BF720AE7028001F17AA /* XTRangeManager.m in Sources */,
+				72678BF920AE7028001F17AA /* XTAudioPlayer.m in Sources */,
+				72678BFB20AE7028001F17AA /* XTRangeModel.m in Sources */,
+				72678BFA20AE7028001F17AA /* XTDownloader.m in Sources */,
+				72678BF820AE7028001F17AA /* XTPlayerConfiguration.m in Sources */,
 				72DC1031202D459900B09F57 /* AppDelegate.m in Sources */,
 				43ACD9132037F53800392974 /* PlayerVC.m in Sources */,
+				72678BFC20AE7028001F17AA /* XTDataManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,7 +16,6 @@
 NSURLSessionDelegate
 >
 
-@property (nonatomic,strong) AVAssetResourceLoadingRequest *loadingRequest;
 @property (nonatomic,strong) NSMutableArray *rangeModelArray;
 @property (nonatomic,copy) NSString *urlScheme;
 @property (nonatomic,strong) XTRangeModel *currentRangeModel;
@@ -107,7 +106,7 @@ NSURLSessionDelegate
     if (!error) {
         [self handleLoadingRequest:self.loadingRequest ByRangeModelArray:self.rangeModelArray];
     }else{
-        NSLog(@"[XTAudioPlayer]%s:n%@",__func__,error);
+        NSLog(@"[XTAudioPlayer]%s:%@",__func__,error);
     }
 }
 
@@ -148,7 +147,6 @@ NSURLSessionDelegate
 }
 
 - (void)cancel {
-    
     if (!self.loadingRequest.isFinished) {
         [self.loadingRequest finishLoading];
     }

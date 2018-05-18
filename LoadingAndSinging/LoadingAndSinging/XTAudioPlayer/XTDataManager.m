@@ -17,7 +17,7 @@ static NSString *currentUrlStr;
 @property (nonatomic,copy) NSString *cachePath;
 @property (nonatomic,strong) NSFileHandle *writeFileHandle;
 @property (nonatomic,strong) NSFileHandle *readFileHandle;
-
+@property (nonatomic,assign) BOOL closeFile;
 @end
 
 @implementation XTDataManager
@@ -65,15 +65,26 @@ static NSString *currentUrlStr;
 
 }
 
++ (NSString *)checkCachedWithFilePath:(NSString *)filePath {
+
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        return filePath;
+    }else{
+        return nil;
+    }
+    
+}
+
 - (void)addCacheData:(NSData *)data ForRange:(NSRange)range{
     @synchronized(self.writeFileHandle){
         @try{
-            [self.writeFileHandle seekToFileOffset:range.location];
-            [self.writeFileHandle writeData:data];
-            [self.writeFileHandle synchronizeFile];
-            if (range.location + data.length >= self.contentLength) {
-                
-                [self copyFileToCachePath];
+            if (!self.closeFile) {
+                [self.writeFileHandle seekToFileOffset:range.location];
+                [self.writeFileHandle writeData:data];
+                [self.writeFileHandle synchronizeFile];
+                if (range.location + data.length >= self.contentLength) {
+                    [self copyFileToCachePath];
+                }
             }
         }@catch(NSException *exception){
             NSLog(@"[XTAudioPlayer]%s:%@",__func__,exception);
@@ -157,12 +168,16 @@ static NSString *currentUrlStr;
 - (void)copyFileToCachePath{
     
     [self.writeFileHandle closeFile];
+    self.closeFile = YES;
     NSError *error;
     [[NSFileManager defaultManager] moveItemAtPath:self.tmpPath toPath:self.cachePath error:&error];
     if (error) {
         NSLog(@"[XTAudioPlayer]%s:%@",__func__,error);
     }else{
         self.readFileHandle = [NSFileHandle fileHandleForReadingAtPath:self.cachePath];
+        if ([self.delegate respondsToSelector:@selector(fileDownloadAndSaveSuccess)]) {
+            [self.delegate fileDownloadAndSaveSuccess];
+        }
     }
     
 }
