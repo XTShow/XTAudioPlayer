@@ -6,8 +6,8 @@
 ### Features
 - Playback an audio/video with an url or a path for a media file in sandbox or boundle, the file will be cached automatically, you can specified the cache path for the media file, the playCompleteBlock will be executed when complete the play;
 - If you playback a video, there are two ways:
-        1.you can only create a visible layer which can be specified the frame and super view;
-        2.you can playback by AVPlayerViewController;
+  - you can only create a visible layer which can be specified the frame and super view;
+  - you can playback by AVPlayerViewController;
 - Configure properties for player,such as AVAudioSessionCategory, rotate angle for playerLayer etc.;
 - The delegate methods will be called when the player is suspended because of the buffer is empty or the player is ready to continue to playback;
 - Restart, pause and cancel the player.
