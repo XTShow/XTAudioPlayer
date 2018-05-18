@@ -12,10 +12,12 @@
 @interface PlayerVC ()
 <
 UITableViewDelegate,
-UITableViewDataSource
+UITableViewDataSource,
+XTAudioPlayerDelegate
 >
 
 @property (nonatomic,strong) NSArray *urlArray;
+@property (nonatomic,assign) NSTimeInterval lastSuspendTime;
 @end
 
 @implementation PlayerVC
@@ -33,7 +35,7 @@ UITableViewDataSource
                                @"http://download.lingyongqian.cn/music/ForElise.mp3",
                                @"http://mpge.5nd.com/2018/2018-1-23/74521/1.mp3",
                                @"http://download.lingyongqian.cn/music/AdagioSostenuto.mp3",
-                               @"http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4",
+                               @"http://vfx.mtime.cn/Video/2018/05/15/mp4/180515210431224977.mp4",
                                audioBoundlePath,
                                audioSandboxPath,
                                videoBoundlePath,
@@ -97,17 +99,42 @@ UITableViewDataSource
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    //Configure properties for XTAudioPlayer and playback a video.
+//1.===Playback a audio.
+//    [[XTAudioPlayer sharePlayer] playWithUrlStr:self.urlArray[indexPath.row] cachePath:nil completion:nil];
+    
+    
+//2.===Configure properties for XTAudioPlayer and playback a video.
 //    [XTAudioPlayer sharePlayer].config.playerLayerRotateAngle = M_PI_2;
 //    [XTAudioPlayer sharePlayer].config.playerLayerVideoGravity = AVLayerVideoGravityResizeAspectFill;
 //    [XTAudioPlayer sharePlayer].config.audioSessionCategory = AVAudioSessionCategoryPlayback;
 //
 //    [[XTAudioPlayer sharePlayer] playWithUrlStr:self.urlArray[indexPath.row] cachePath:nil videoFrame:[UIScreen mainScreen].bounds inView:self.view completion:nil];
     
-    //======
     
-    //Playback a audio.
-    [[XTAudioPlayer sharePlayer] playWithUrlStr:self.urlArray[indexPath.row] cachePath:nil completion:nil];
+//3.===Playback a video by AVPlayerViewController
+    [XTAudioPlayer sharePlayer].delegate = self;
+    AVPlayerViewController *playerVC = [[XTAudioPlayer sharePlayer] playByPlayerVCWithUrlStr:self.urlArray[indexPath.row] cachePath:nil completion:nil];
+
+    [self presentViewController:playerVC animated:NO completion:nil];
+    
+}
+
+#pragma mark - XTAudioPlayerDelegate
+-(void)suspendForLoadingDataWithPlayer:(AVPlayer *)player{
+    //Do something when the player is suspended for loading data...
+    NSTimeInterval currentTime = [[NSDate date] timeIntervalSinceNow];
+    self.lastSuspendTime = currentTime;
+}
+
+-(void)activeToContinueWithPlayer:(AVPlayer *)player{
+    //The player is ready to continue...
+    /**
+     It is not recommended to continue play the player immediately, because this selector will be called when the player only buffer a little data, so this selector will be called very frequently.
+     Therefore it is recommended to play the player after buffering several seconds.
+     */
+    dispatch_after(dispatch_time(self.lastSuspendTime, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [player play];
+    });
 }
 
 #pragma mark - Assistant Selector
@@ -121,7 +148,8 @@ UITableViewDataSource
 
 - (void)dismiss {
     [[XTAudioPlayer sharePlayer] cancel];
-    //[XTAudioPlayer completeDealloc];// Completely destroy the Player, free up all the memory occupied by the XTAudioPlayer. If not special needs, it is not recommended.(完全销毁，释放掉XTAudioPlayer所占用的全部内存，如非特殊需要，不建议使用。)
+    //[[XTAudioPlayer sharePlayer] completeDealloc];// Completely destroy the Player, free up all the memory occupied by the XTAudioPlayer. If not special needs, it is not recommended.(完全销毁，释放掉XTAudioPlayer所占用的全部内存，如非特殊需要，不建议使用。)
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 @end

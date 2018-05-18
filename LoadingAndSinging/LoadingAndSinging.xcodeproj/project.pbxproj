@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		43ACD9132037F53800392974 /* PlayerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ACD9122037F53800392974 /* PlayerVC.m */; };
 		72678BF720AE7028001F17AA /* XTRangeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 72678BEB20AE7028001F17AA /* XTRangeManager.m */; };
 		72678BF820AE7028001F17AA /* XTPlayerConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 72678BEE20AE7028001F17AA /* XTPlayerConfiguration.m */; };
 		72678BF920AE7028001F17AA /* XTAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 72678BF220AE7028001F17AA /* XTAudioPlayer.m */; };
 		72678BFA20AE7028001F17AA /* XTDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 72678BF420AE7028001F17AA /* XTDownloader.m */; };
 		72678BFB20AE7028001F17AA /* XTRangeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 72678BF520AE7028001F17AA /* XTRangeModel.m */; };
 		72678BFC20AE7028001F17AA /* XTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 72678BF620AE7028001F17AA /* XTDataManager.m */; };
+		72678BFE20AE7307001F17AA /* PlayerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 72678BFD20AE7307001F17AA /* PlayerVC.m */; };
 		72DC1031202D459900B09F57 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 72DC1030202D459900B09F57 /* AppDelegate.m */; };
 		72DC1034202D459900B09F57 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72DC1033202D459900B09F57 /* ViewController.m */; };
 		72DC1037202D459900B09F57 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72DC1035202D459900B09F57 /* Main.storyboard */; };
@@ -26,7 +26,6 @@
 
 /* Begin PBXFileReference section */
 		43ACD9112037F53800392974 /* PlayerVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerVC.h; sourceTree = "<group>"; };
-		43ACD9122037F53800392974 /* PlayerVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerVC.m; sourceTree = "<group>"; };
 		72678BEB20AE7028001F17AA /* XTRangeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTRangeManager.m; sourceTree = "<group>"; };
 		72678BEC20AE7028001F17AA /* XTAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTAudioPlayer.h; sourceTree = "<group>"; };
 		72678BED20AE7028001F17AA /* XTDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTDownloader.h; sourceTree = "<group>"; };
@@ -39,6 +38,7 @@
 		72678BF420AE7028001F17AA /* XTDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDownloader.m; sourceTree = "<group>"; };
 		72678BF520AE7028001F17AA /* XTRangeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTRangeModel.m; sourceTree = "<group>"; };
 		72678BF620AE7028001F17AA /* XTDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDataManager.m; sourceTree = "<group>"; };
+		72678BFD20AE7307001F17AA /* PlayerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerVC.m; sourceTree = "<group>"; };
 		72DC102C202D459900B09F57 /* LoadingAndSinging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoadingAndSinging.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72DC102F202D459900B09F57 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		72DC1030202D459900B09F57 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -122,7 +122,7 @@
 				72DC1032202D459900B09F57 /* ViewController.h */,
 				72DC1033202D459900B09F57 /* ViewController.m */,
 				43ACD9112037F53800392974 /* PlayerVC.h */,
-				43ACD9122037F53800392974 /* PlayerVC.m */,
+				72678BFD20AE7307001F17AA /* PlayerVC.m */,
 				4388625120A1EDA4006D3B30 /* Supporting Files */,
 			);
 			path = LoadingAndSinging;
@@ -209,8 +209,8 @@
 				72678BFA20AE7028001F17AA /* XTDownloader.m in Sources */,
 				72678BF820AE7028001F17AA /* XTPlayerConfiguration.m in Sources */,
 				72DC1031202D459900B09F57 /* AppDelegate.m in Sources */,
-				43ACD9132037F53800392974 /* PlayerVC.m in Sources */,
 				72678BFC20AE7028001F17AA /* XTDataManager.m in Sources */,
+				72678BFE20AE7307001F17AA /* PlayerVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
