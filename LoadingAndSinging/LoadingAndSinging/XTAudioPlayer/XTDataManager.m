@@ -18,6 +18,7 @@ static NSString *currentUrlStr;
 @property (nonatomic,strong) NSFileHandle *writeFileHandle;
 @property (nonatomic,strong) NSFileHandle *readFileHandle;
 @property (nonatomic,assign) BOOL closeFile;
+@property (nonatomic,assign) NSUInteger cachedDataLength;
 @end
 
 @implementation XTDataManager
@@ -82,7 +83,8 @@ static NSString *currentUrlStr;
                 [self.writeFileHandle seekToFileOffset:range.location];
                 [self.writeFileHandle writeData:data];
                 [self.writeFileHandle synchronizeFile];
-                if (range.location + data.length >= self.contentLength) {
+                self.cachedDataLength += data.length;
+                if (self.cachedDataLength >= self.contentLength) {
                     [self copyFileToCachePath];
                 }
             }
