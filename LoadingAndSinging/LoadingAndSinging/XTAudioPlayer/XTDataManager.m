@@ -48,7 +48,7 @@ static NSString *currentUrlStr;
 
 + (NSString *)checkCachedWithUrl:(NSString *)urlStr {
     
-    if ([urlStr hasPrefix:@"/var"]) {
+    if ([urlStr hasPrefix:@"/var"] || [urlStr hasPrefix:@"/Users"]) {
         return urlStr;
     }
     
