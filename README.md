@@ -13,6 +13,14 @@
 - Restart, pause and cancel the player.
 
 ### How To Get Started
+#### 1、CocoaPods
+Podfile
+````
+platform :ios, '9.0'
+pod 'XTAudioPlayer'
+````
+
+#### 2、Manual
 1. Download the XTAudioPlayer zip and try out the example app;
 2. Drag the folder "XTAudioPlayer" which in the project folder "LoadingAndSinging" into your project;
 
